@@ -4,8 +4,8 @@ import LanguageSelector from "../LanguageSelector";
 function App() {
     return (
         <>
-            <CharacterBrowser/>
             <LanguageSelector/>
+            <CharacterBrowser/>
         </>
     );
 }

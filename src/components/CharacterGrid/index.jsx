@@ -1,9 +1,9 @@
 import CharacterCard from "../CharacterCard";
 
-function CharacterGrid() {
+function CharacterGrid({characters}) {
     return (
         <>
-            <CharacterCard/>
+            {characters.map((character) => (<CharacterCard key={character.id} {...character} />))}
         </>
     )
 }
