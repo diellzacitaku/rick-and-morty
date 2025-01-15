@@ -1,3 +1,6 @@
+import CharacterBrowser from "../CharacterBrowser";
+import LanguageSelector from "../LanguageSelector";
+
 function App() {
     return (
         <>
