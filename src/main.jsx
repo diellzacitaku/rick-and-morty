@@ -1,10 +1,11 @@
 import './index.css'
 import * as ReactDOM from 'react-dom/client';
-import App from './App.jsx'
+import App from './components/App/App.jsx'
 import { ApolloClient, InMemoryCache, ApolloProvider, } from '@apollo/client';
+import {RICK_AND_MORTY_API} from "./utils/constants.js";
 
 const client = new ApolloClient({
-    uri: 'https://rickandmortyapi.com/graphql',
+    uri: RICK_AND_MORTY_API,
     cache: new InMemoryCache(),
 });
 
