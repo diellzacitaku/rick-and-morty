@@ -1,0 +1,22 @@
+.character-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.character-table th, .character-table td {
+    border: 1px solid #888888;
+    padding: 8px;
+    text-align: left;
+}
+
+.character-table th {
+    background-color: darkolivegreen;
+}
+
+.character-table tr:hover {
+    background-color: darkgray;
+}
