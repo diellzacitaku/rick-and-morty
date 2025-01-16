@@ -1,39 +1,76 @@
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {Button, Input, Select} from "antd";
+import {AutoComplete, Button, Select} from "antd";
 
 function CharacterFilters({onFiltersChange, onSortChange}) {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const [status, setStatus] = useState('');
     const [species, setSpecies] = useState('');
     const [sortBy, setSortBy] = useState('');
 
-    const handleApplyFilters = () => {
+    const handleStatusChange = (status) => {
+        setStatus(status);
         onFiltersChange({status, species});
-        onSortChange(sortBy)
+    };
+
+    const handleSpeciesChange = (searchValue) => {
+        setSpecies(searchValue);
+        onFiltersChange({status, species: searchValue})
+    }
+
+    const handleSortChange = (sortValue) => {
+        setSortBy(sortValue);
+        onSortChange(sortValue);
+    };
+
+    const handleClearFilters = () => {
+        setStatus("");
+        setSpecies("");
+        setSortBy("");
+
+        onFiltersChange({ status: "", species: "" });
+        onSortChange("");
     };
 
     return (
         <>
-            <Select onChange={setStatus} placeholder='Select a status' options={[
-                {value: 'Alive', label: <span>{t('status.alive')}</span>},
-                {value: 'Dead', label: <span>{t('status.dead')}</span>},
-                {value: 'Unknown', label: <span>{t('status.unknown')}</span>},
-            ]}>
-            </Select>
             <Select
-                placeholder='Sort by'
-                onChange={(value) => setSortBy(value)}
+                value={status || undefined}
+                onChange={handleStatusChange}
+                placeholder="Select a status"
+                style={{width: 160}}
                 options={[
-                    { value: 'name-asc', label: 'Name A-Z' },
-                    { value: 'name-desc', label: 'Name Z-A' },
-                    { value: 'origin-asc', label: 'Origin A-Z' },
-                    { value: 'origin-desc', label: 'Origin Z-A' },
-            ]}>
-            </Select>
-            <Input placeholder="Search by species" onChange={(e)=>{setSpecies(e.target.value)}}/>
-            <Button type="primary" onClick={handleApplyFilters}>{t('filters.apply')}</Button>
+                    {value: 'Alive', label: t('status.alive')},
+                    {value: 'Dead', label: t('status.dead')},
+                    {value: 'Unknown', label: t('status.unknown')},
+                ]}
+            />
+
+            <Select
+                value={sortBy || undefined}
+                onChange={handleSortChange}
+                placeholder="Sort by"
+                style={{width: 160}}
+                options={[
+                    {value: 'none', label: 'No sort'},
+                    {value: 'name-asc', label: 'Name A-Z'},
+                    {value: 'name-desc', label: 'Name Z-A'},
+                    {value: 'origin-asc', label: 'Origin A-Z'},
+                    {value: 'origin-desc', label: 'Origin Z-A'},
+                ]}
+            />
+
+            <AutoComplete
+                value={species}
+                onSearch={handleSpeciesChange}
+                placeholder="Search by species"
+                style={{width: 200}}
+            />
+
+            <Button type="primary" onClick={handleClearFilters}>
+                Clear Filters
+            </Button>
         </>
     );
 }

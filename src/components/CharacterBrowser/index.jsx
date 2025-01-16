@@ -1,39 +1,14 @@
 import CharacterFilters from "../CharacterFilters";
 import CharacterGrid from "../CharacterGrid";
-import {gql, useQuery} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
-import { Pagination } from "antd";
+import InfiniteScroll from "react-infinite-scroll-component";
+import {GET_CHARACTERS} from "../../utils/query.js";
 
-
-const GET_CHARACTERS = gql`
-    query GetCharacters($page: Int, $status: String, $species: String) {
-        characters(page: $page, filter: { status: $status, species: $species }) {
-            results {
-                id
-                name
-                status
-                species
-                gender
-                origin {
-                    name
-                }
-                image
-            }
-            info {
-                count
-                pages
-                next
-                prev
-            }
-        }
-    }
-`;
-
-function sortCharacters(characters, sortBy){
+function sortCharacters(characters, sortBy) {
     let sortedCharacters = [...characters];
-    switch (sortBy){
+    switch (sortBy) {
         case 'name-asc':
-            console.log("asc")
             sortedCharacters.sort((a, b) => a.name.localeCompare(b.name))
             break;
         case 'name-desc':
@@ -51,67 +26,70 @@ function sortCharacters(characters, sortBy){
 }
 
 function CharacterBrowser() {
-    const [characters, setCharacters] = useState([]);
-    const [sortedCharacters, setSortedCharacters] = useState([]);
-
-    const [filters, setFilters] = useState({ status: '', species: '' });
+    const [filters, setFilters] = useState({status: '', species: ''});
     const [sortBy, setSortBy] = useState('');
-
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [characters, setCharacters] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageInfo, setPageInfo] = useState({ pages: 1 });
+    const [pageInfo, setPageInfo] = useState({count: 0, pages: 1});
 
-    const { refetch } = useQuery(GET_CHARACTERS, {
-        skip: true,
+    const {data, loading, error} = useQuery(GET_CHARACTERS, {
+        variables: {page: currentPage, ...filters},
     });
 
-    const fetchCharacters = async () => {
-        setLoading(true);
-        setError(null);
+    useEffect(() => {
+        if (!data?.characters) return;
 
-        try {
-            const { data } = await refetch({ ...filters, page: currentPage });
+        if (currentPage === 1) {
             setCharacters(data.characters.results);
-            setPageInfo(data.characters.info);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
+        } else {
+            setCharacters((prev) => [...prev, ...data.characters.results]);
+        }
+
+        setPageInfo(data.characters.info);
+    }, [data, currentPage]);
+
+    useEffect(() => {
+        setCharacters([]);
+        setCurrentPage(1);
+    }, [filters]);
+
+    const sortedCharacters = sortCharacters(characters, sortBy);
+
+    const fetchMoreCharacters = () => {
+        if (pageInfo.next) {
+            setCurrentPage((prev) => prev + 1);
         }
     };
 
-    useEffect(() => {
-        fetchCharacters();
-    }, [filters, currentPage]);
+    const handleFiltersChange = (newFilters) => {
+        setFilters((prev) => ({...prev, ...newFilters}));
+    };
 
-    useEffect(() => {
-        setSortedCharacters(sortCharacters(characters, sortBy));
-    }, [characters, sortBy]);
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const handleSortChange = (sortValue) => {
+        setSortBy(sortValue);
     };
 
     return (
         <>
             <CharacterFilters
-                onFiltersChange={(newFilters) => setFilters({ ...filters, ...newFilters })}
-                onSortChange={(sortBy)=> setSortBy(sortBy)}
+                onFiltersChange={handleFiltersChange}
+                onSortChange={handleSortChange}
             />
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
-            {!loading && !error && (
-                <>
-                    <CharacterGrid characters={sortedCharacters} />
-                    <Pagination
-                        current={currentPage}
-                        total={pageInfo.pages * 5}
-                        pageSize={10}
-                        onChange={handlePageChange}
-                        showSizeChanger={false}
-                    />
-                </>
+
+            {loading && characters.length === 0 && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
+
+            {!error && (
+                <InfiniteScroll
+                    dataLength={sortedCharacters.length}
+                    next={fetchMoreCharacters}
+                    hasMore={!!pageInfo.next}
+                    loader={<p>Loading more...</p>}
+                    endMessage={<p>No more data!</p>}
+                    style={{overflow: "visible"}}
+                >
+                    <CharacterGrid characters={sortedCharacters}/>
+                </InfiniteScroll>
             )}
         </>
     );
