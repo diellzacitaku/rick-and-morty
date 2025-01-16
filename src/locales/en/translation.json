@@ -1,7 +1,8 @@
 {
+  "loading": "Loading",
   "name": "Name",
   "species": {
-    "status": "Status",
+    "species": "Species",
     "alien": "Alien",
     "human": "Human",
     "humanoid": "Humanoid",

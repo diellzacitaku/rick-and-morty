@@ -9,18 +9,29 @@
     font-family: 'Poppins', sans-serif;
     background-color: #fff;
 }
+.character-card::after, .character-card-dead::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    height: 20px;
+    width: 100%;
+    left: 0;
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/23618/rip.svg) bottom;
+    background-size: 200%;
+}
 
 .character-card-dead {
-    filter: grayscale(90%);
-    opacity: 0.6;
-    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.character-card-dead img {
+    filter: grayscale(100%);
 }
 
 .card-status {
-    font-family: 'Merriweather', serif;
-    font-size: 14px;
+    font-family: 'Lobster', cursive;
+    font-size: 24px;
     font-weight: bold;
-    color: #595959;
     margin-bottom: 10px;
     text-align: center;
 }
@@ -37,7 +48,6 @@
     font-size: 32px;
     font-weight: bold;
     margin: 0;
-    color: #000;
     text-transform: capitalize;
     text-align: center;
     display: block;
@@ -48,8 +58,7 @@
     font-size: 15px;
     color: #595959;
     margin: 2px 0;
-    line-height: 0.8; /* Closer line spacing */
-    text-transform: capitalize;
-    text-align: start;
+    text-transform: uppercase;
+    text-align: center;
 }
 

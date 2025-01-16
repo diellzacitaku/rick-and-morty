@@ -8,11 +8,9 @@ function CharacterCard({ name, status, species, gender, origin, image }) {
     return (
         <Card
             className={status === "Dead" ? "character-card-dead" : "character-card"}
-            style={{width:380, height:580}}
+            style={{width:380, height:620}}
         >
-            <div className="card-status">
-                {t("status.status")}: {t(`status.${status.toLowerCase()}`)}
-            </div>
+            <div className="card-status">{t(`status.${status.toLowerCase()}`)}</div>
 
             <div className="card-image">
                 <img src={image} alt={name} />

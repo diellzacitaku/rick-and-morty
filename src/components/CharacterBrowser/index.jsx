@@ -4,6 +4,7 @@ import {useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {GET_CHARACTERS} from "../../utils/query.js";
+import {useTranslation} from "react-i18next";
 
 function sortCharacters(characters, sortBy) {
     let sortedCharacters = [...characters];
@@ -26,6 +27,7 @@ function sortCharacters(characters, sortBy) {
 }
 
 function CharacterBrowser() {
+    const { t } = useTranslation();
     const [filters, setFilters] = useState({status: '', species: ''});
     const [sortBy, setSortBy] = useState('');
     const [characters, setCharacters] = useState([]);
@@ -72,7 +74,7 @@ function CharacterBrowser() {
                 onSortChange={handleSortChange}
             />
 
-            {loading && characters.length === 0 && <p>Loading...</p>}
+            {loading && characters.length === 0 && <p>{t("loading")}...</p>}
             {error && <p>Error: {error.message}</p>}
 
             {!error && (
