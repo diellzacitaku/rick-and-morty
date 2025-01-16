@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.6",
+    "antd": "^5.23.1",
     "graphql": "^16.10.0",
     "i18next": "^24.2.1",
     "prop-types": "^15.8.1",

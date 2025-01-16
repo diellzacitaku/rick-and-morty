@@ -1,25 +1,21 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
+import {Select} from "antd";
 
 function LanguageSelector() {
-    const { i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
 
-    const handleLanguageChange = (event) => {
-        i18n.changeLanguage(event.target.value);
+    const handleLanguageChange = (value) => {
+        i18n.changeLanguage(value);
     };
 
     return (
-        <div>
-            <label htmlFor="language-select">Language: </label>
-            <select
-                id="language-select"
-                value={i18n.language}
-                onChange={handleLanguageChange}
-            >
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-            </select>
-        </div>
+        <>
+            <Select onChange={handleLanguageChange} defaultValue='en' placeholder='Select language' options={[
+                {value: 'en', label: <span>{t('language.english')}</span>},
+                {value: 'de', label: <span>{t('language.german')}</span>},
+            ]}>
+            </Select>
+        </>
     );
 }
 

@@ -1,9 +1,12 @@
 import CharacterCard from "../CharacterCard";
+import {Flex} from "antd";
 
 function CharacterGrid({characters}) {
     return (
         <>
-            {characters.map((character) => (<CharacterCard key={character.id} {...character} />))}
+            <Flex justify='center' wrap="wrap" gap="large">
+                {characters.map((character) => (<CharacterCard key={character.id} {...character} />))}
+            </Flex>
         </>
     )
 }

@@ -1,16 +1,19 @@
 import PropTypes from "prop-types";
 import "./style.css";
+import {Card} from "antd";
 
 function CharacterCard({name, status, species, gender, origin, image}) {
     return (
-        <div>
-            <img src={image} alt={name}/>
+        <Card
+            className={status === "Dead" ? "character-card-dead" : "character-card"}
+            cover={<img alt={name} src={image}/>}
+        >
             <h3>{name}</h3>
             <p>Status: {status}</p>
             <p>Species: {species}</p>
             <p>Gender: {gender}</p>
             <p>Origin: {origin.name}</p>
-        </div>
+        </Card>
     );
 }
 
