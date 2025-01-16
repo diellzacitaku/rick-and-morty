@@ -48,11 +48,6 @@ function CharacterBrowser() {
         setPageInfo(data.characters.info);
     }, [data, currentPage]);
 
-    useEffect(() => {
-        setCharacters([]);
-        setCurrentPage(1);
-    }, [filters]);
-
     const sortedCharacters = sortCharacters(characters, sortBy);
 
     const fetchMoreCharacters = () => {
@@ -62,6 +57,7 @@ function CharacterBrowser() {
     };
 
     const handleFiltersChange = (newFilters) => {
+        setCurrentPage(1);
         setFilters((prev) => ({...prev, ...newFilters}));
     };
 
