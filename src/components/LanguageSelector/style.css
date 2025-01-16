@@ -1,0 +1,7 @@
+.language-selector {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

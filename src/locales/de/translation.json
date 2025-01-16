@@ -1,7 +1,39 @@
 {
+  "name": "Name",
+  "species": {
+    "species": "Spezies",
+    "alien": "Ausländer",
+    "human": "Menschlich",
+    "humanoid": "Humanoide",
+    "unknown": "Unbekannt"
+  },
+  "gender": {
+    "gender": "Geschlecht",
+    "male": "Männlich",
+    "female": "Weiblich",
+    "unknown": "Unbekannt"
+  },
+  "origin": {
+    "origin": "Herkunft",
+    "earth": "Erde (C-137)",
+    "unknown": "Unbekannt",
+    "fantasy-world": "Fantasiewelt",
+    "bird-world": "Vogelwelt"
+  },
+  "status": {
+    "status": "Status",
+    "alive": "Vogelwelt",
+    "dead": "Tot",
+    "unknown": "Unbekannt"
+  },
   "filters": {
     "status": "Status",
     "species": "Spezies",
     "apply": "Filter anwenden"
+  },
+  "language": {
+    "label": "Sprache",
+    "english": "Englisch",
+    "german": "Deutsch"
   }
 }

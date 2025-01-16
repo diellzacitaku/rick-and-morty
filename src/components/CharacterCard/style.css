@@ -1,10 +1,55 @@
-.character-card-dead {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    opacity: 0.6;
-    filter: grayscale(90%); /* This makes the card black and white */
-    transition: all 0.3s ease;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather:wght@400;700&display=swap');
 
 .character-card {
     transition: all 0.3s ease;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
 }
+
+.character-card-dead {
+    filter: grayscale(90%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.card-status {
+    font-family: 'Merriweather', serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #595959;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.card-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.card-name {
+    font-family: 'Lobster', cursive;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+    text-transform: capitalize;
+    text-align: center;
+    display: block;
+}
+
+.card-details{
+    font-family: 'Merriweather', serif;
+    font-size: 15px;
+    color: #595959;
+    margin: 2px 0;
+    line-height: 0.8; /* Closer line spacing */
+    text-transform: capitalize;
+    text-align: start;
+}
+

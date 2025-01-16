@@ -1,5 +1,27 @@
 {
+  "name": "Name",
+  "species": {
+    "status": "Status",
+    "alien": "Alien",
+    "human": "Human",
+    "humanoid": "Humanoid",
+    "unknown": "Unknown"
+  },
+  "gender": {
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "unknown": "Unknown"
+  },
+  "origin": {
+    "origin": "Origin",
+    "earth": "Earth (C-137)",
+    "unknown": "Unknown",
+    "fantasy-world": "Fantasy World",
+    "bird-world": "Bird World"
+  },
   "status": {
+    "status": "Status",
     "alive": "Alive",
     "dead": "Dead",
     "unknown": "Unknown"

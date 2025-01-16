@@ -1,31 +1,33 @@
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import "./style.css";
-import {Card} from "antd";
+import { Card } from "antd";
 
-function CharacterCard({name, status, species, gender, origin, image}) {
+function CharacterCard({ name, status, species, gender, origin, image }) {
+    const { t } = useTranslation();
+
     return (
         <Card
             className={status === "Dead" ? "character-card-dead" : "character-card"}
-            cover={<img alt={name} src={image}/>}
+            style={{width:380, height:580}}
         >
-            <h3>{name}</h3>
-            <p>Status: {status}</p>
-            <p>Species: {species}</p>
-            <p>Gender: {gender}</p>
-            <p>Origin: {origin.name}</p>
+            <div className="card-status">
+                {t("status.status")}: {t(`status.${status.toLowerCase()}`)}
+            </div>
+
+            <div className="card-image">
+                <img src={image} alt={name} />
+            </div>
+
+            <h3 className="card-name">{name}</h3>
+
+            <div className="card-details">
+                <p>{t("origin.origin")}: {origin.name}</p>
+                <p>{t("gender.gender")}: {gender}</p>
+                <p>{t("filters.species")}: {species}</p>
+            </div>
         </Card>
     );
 }
-
-CharacterCard.propTypes = {
-    name: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    species: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
-    origin: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-    }).isRequired,
-    image: PropTypes.string.isRequired,
-};
 
 export default CharacterCard;

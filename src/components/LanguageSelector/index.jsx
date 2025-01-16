@@ -1,5 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import {Select} from "antd";
+import "./style.css"
 
 function LanguageSelector() {
     const {t, i18n} = useTranslation();
@@ -9,13 +10,12 @@ function LanguageSelector() {
     };
 
     return (
-        <>
-            <Select onChange={handleLanguageChange} defaultValue='en' placeholder='Select language' options={[
-                {value: 'en', label: <span>{t('language.english')}</span>},
-                {value: 'de', label: <span>{t('language.german')}</span>},
-            ]}>
-            </Select>
-        </>
+        <Select className="language-selector" onChange={handleLanguageChange} defaultValue='en'
+                placeholder='Select language' options={[
+            {value: 'en', label: <span>{t('language.english')}</span>},
+            {value: 'de', label: <span>{t('language.german')}</span>},
+        ]}>
+        </Select>
     );
 }
 
