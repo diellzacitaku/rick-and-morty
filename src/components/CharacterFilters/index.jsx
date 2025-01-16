@@ -2,14 +2,16 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Button, Input, Select} from "antd";
 
-function CharacterFilters({onFiltersChange}) {
-    const [status, setStatus] = useState('');
-    const [species, setSpecies] = useState('');
+function CharacterFilters({onFiltersChange, onSortChange}) {
     const { t } = useTranslation();
 
+    const [status, setStatus] = useState('');
+    const [species, setSpecies] = useState('');
+    const [sortBy, setSortBy] = useState('');
 
     const handleApplyFilters = () => {
         onFiltersChange({status, species});
+        onSortChange(sortBy)
     };
 
     return (
@@ -22,7 +24,7 @@ function CharacterFilters({onFiltersChange}) {
             </Select>
             <Select
                 placeholder='Sort by'
-                onChange={(value) => onFiltersChange({ sortBy: value })}
+                onChange={(value) => setSortBy(value)}
                 options={[
                     { value: 'name-asc', label: 'Name A-Z' },
                     { value: 'name-desc', label: 'Name Z-A' },
@@ -32,7 +34,6 @@ function CharacterFilters({onFiltersChange}) {
             </Select>
             <Input placeholder="Search by species" onChange={(e)=>{setSpecies(e.target.value)}}/>
             <Button type="primary" onClick={handleApplyFilters}>{t('filters.apply')}</Button>
-
         </>
     );
 }

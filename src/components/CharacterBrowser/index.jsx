@@ -29,16 +29,38 @@ const GET_CHARACTERS = gql`
     }
 `;
 
+function sortCharacters(characters, sortBy){
+    let sortedCharacters = [...characters];
+    switch (sortBy){
+        case 'name-asc':
+            console.log("asc")
+            sortedCharacters.sort((a, b) => a.name.localeCompare(b.name))
+            break;
+        case 'name-desc':
+            sortedCharacters.sort((a, b) => b.name.localeCompare(a.name))
+            break;
+        case 'origin-asc':
+            sortedCharacters.sort((a, b) => a.origin.name.localeCompare(b.origin.name));
+            break;
+        case 'origin-desc':
+            sortedCharacters.sort((a, b) => b.origin.name.localeCompare(a.origin.name))
+            break
+    }
+
+    return sortedCharacters
+}
 
 function CharacterBrowser() {
-    const [filters, setFilters] = useState({ status: '', species: '' });
     const [characters, setCharacters] = useState([]);
+    const [sortedCharacters, setSortedCharacters] = useState([]);
+
+    const [filters, setFilters] = useState({ status: '', species: '' });
+    const [sortBy, setSortBy] = useState('');
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [sortBy, setSortBy] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [pageInfo, setPageInfo] = useState({ pages: 1 });
-
 
     const { refetch } = useQuery(GET_CHARACTERS, {
         skip: true,
@@ -50,17 +72,6 @@ function CharacterBrowser() {
 
         try {
             const { data } = await refetch({ ...filters, page: currentPage });
-            let sortedCharacters = data.characters.results;
-
-            if (sortBy === 'name-asc') {
-                sortedCharacters.sort((a, b) => a.name.localeCompare(b.name));
-            } else if (sortBy === 'name-desc') {
-                sortedCharacters.sort((a, b) => b.name.localeCompare(a.name));
-            } else if (sortBy === 'origin-asc') {
-                sortedCharacters.sort((a, b) => a.origin.name.localeCompare(b.origin.name));
-            } else if (sortBy === 'origin-desc') {
-                sortedCharacters.sort((a, b) => b.origin.name.localeCompare(a.origin.name));
-            }
             setCharacters(data.characters.results);
             setPageInfo(data.characters.info);
         } catch (err) {
@@ -70,16 +81,13 @@ function CharacterBrowser() {
         }
     };
 
-    const handleFiltersChange = (newFilters) => {
-        setFilters((prev) => ({ ...prev, ...newFilters }));
-        if (newFilters.sortBy) {
-            setSortBy(newFilters.sortBy);
-        }
-    };
-
     useEffect(() => {
         fetchCharacters();
-    }, [filters, sortBy, currentPage]);
+    }, [filters, currentPage]);
+
+    useEffect(() => {
+        setSortedCharacters(sortCharacters(characters, sortBy));
+    }, [characters, sortBy]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -87,12 +95,15 @@ function CharacterBrowser() {
 
     return (
         <>
-            <CharacterFilters onFiltersChange={(newFilters) => setFilters({ ...filters, ...newFilters })} />
+            <CharacterFilters
+                onFiltersChange={(newFilters) => setFilters({ ...filters, ...newFilters })}
+                onSortChange={(sortBy)=> setSortBy(sortBy)}
+            />
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
             {!loading && !error && (
                 <>
-                    <CharacterGrid characters={characters} />
+                    <CharacterGrid characters={sortedCharacters} />
                     <Pagination
                         current={currentPage}
                         total={pageInfo.pages * 5}
