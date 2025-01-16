@@ -23,14 +23,17 @@
   },
   "status": {
     "status": "Status",
-    "alive": "Vogelwelt",
+    "alive": "Lebendig",
     "dead": "Tot",
     "unknown": "Unbekannt"
   },
   "filters": {
     "status": "Status",
+    "select-status": "Status wählen",
     "species": "Spezies",
-    "apply": "Filter anwenden"
+    "search-species": "Suche nach Spezies",
+    "sort": "Sortieren nach",
+    "clear": "Filters löschen"
   },
   "language": {
     "label": "Sprache",

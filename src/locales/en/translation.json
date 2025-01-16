@@ -29,8 +29,11 @@
   },
   "filters": {
     "status": "Status",
+    "select-status": "Select a status",
     "species": "Species",
-    "apply": "Apply Filters"
+    "search-species": "Search by species",
+    "sort": "Sort by",
+    "clear": "Clear Filters"
   },
   "language": {
     "label": "Language",

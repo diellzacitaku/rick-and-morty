@@ -41,14 +41,14 @@ function CharacterFilters({onFiltersChange, onSortChange}) {
             <AutoComplete
                 value={species}
                 onSearch={handleSpeciesChange}
-                placeholder="Search by species"
+                placeholder={t('filters.search-species')}
                 style={{width: "100%"}}
             />
             <Flex gap="16px">
                 <Select
                     value={status || undefined}
                     onChange={handleStatusChange}
-                    placeholder="Select a status"
+                    placeholder={t('filters.select-status')}
                     style={{width: 160}}
                     options={[
                         {value: 'Alive', label: t('status.alive')},
@@ -60,7 +60,7 @@ function CharacterFilters({onFiltersChange, onSortChange}) {
                 <Select
                     value={sortBy || undefined}
                     onChange={handleSortChange}
-                    placeholder="Sort by"
+                    placeholder={t('filters.sort')}
                     style={{width: 160}}
                     options={[
                         {value: 'name-asc', label: 'Name A-Z'},
@@ -70,7 +70,7 @@ function CharacterFilters({onFiltersChange, onSortChange}) {
                     ]}
                 />
                 <Button type="primary" className="red" onClick={handleClearFilters}>
-                    Clear Filters
+                    {t('filters.clear')}
                 </Button>
             </Flex>
         </div>
